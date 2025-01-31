@@ -24,6 +24,8 @@ public class ChestPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PickupItem(0);
+            PickupItem(1);
+            PickupItem(2);
         }
     }
 
