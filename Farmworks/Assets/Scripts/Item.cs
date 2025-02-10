@@ -5,7 +5,8 @@ using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(menuName = "Scriptable object/Item")]
 
-public class Item : ScriptableObject {
+public class Item : ScriptableObject
+{
 
 
     [Header("Only Gameplay")]
@@ -19,6 +20,8 @@ public class Item : ScriptableObject {
 
     [Header("Both")]
     public Sprite image;
+    
+    public int seedNumber;
 
 }
 

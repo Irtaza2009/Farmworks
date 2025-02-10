@@ -11,7 +11,7 @@ public class Crops
 public class CropsManager : MonoBehaviour
 {
     [SerializeField] TileBase plowed;
-    [SerializeField] TileBase seeded;
+    [SerializeField] TileBase[] seeded;
     [SerializeField] Tilemap targetTilemap;
 
     Dictionary<Vector2Int, Crops> crops;
@@ -36,9 +36,9 @@ public class CropsManager : MonoBehaviour
         CreatePlowedTile(position);
     }
 
-    public void Seed(Vector3Int position)
+    public void Seed(Vector3Int position, int seed)
     {
-       targetTilemap.SetTile(position, seeded);
+       targetTilemap.SetTile(position, seeded[seed]);
     }
 
     private void CreatePlowedTile(Vector3Int position)

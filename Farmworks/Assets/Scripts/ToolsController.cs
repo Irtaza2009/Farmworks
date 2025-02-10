@@ -106,10 +106,12 @@ public class ToolsController : MonoBehaviour
         }
         else if (selectedItem.type == ItemType.Seed && selectedItem.actionType == ActionType.Place)
         {
+            
             if (cropsManager.Check(selectedTilePosition))
             {
-                cropsManager.Seed(selectedTilePosition);
+                cropsManager.Seed(selectedTilePosition, selectedItem.seedNumber);
             }
+
         }   
         
     }
