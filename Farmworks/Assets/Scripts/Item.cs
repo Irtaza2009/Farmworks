@@ -21,7 +21,7 @@ public class Item : ScriptableObject
     [Header("Both")]
     public Sprite image;
     
-    public int seedNumber;
+    public CropData cropData;
 
 }
 

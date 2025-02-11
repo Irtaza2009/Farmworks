@@ -109,7 +109,8 @@ public class ToolsController : MonoBehaviour
             
             if (cropsManager.Check(selectedTilePosition))
             {
-                cropsManager.Seed(selectedTilePosition, selectedItem.seedNumber);
+                CropData selectedCrop = selectedItem.cropData;
+                cropsManager.Seed(selectedTilePosition, selectedCrop);
             }
 
         }   

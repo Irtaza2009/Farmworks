@@ -18,3 +18,4 @@ MonoBehaviour:
   range: {x: 5, y: 4}
   stackable: 1
   image: {fileID: -5415285, guid: ab126c593cf3a4e26ace756fcc87138b, type: 3}
+  cropData: {fileID: 11400000, guid: cb55857908241499abae7394a5e41d15, type: 2}

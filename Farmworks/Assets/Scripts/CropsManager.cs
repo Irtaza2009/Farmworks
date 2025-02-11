@@ -5,7 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class Crops
 {
-
+    public int growthStage;
+    public CropData cropData;
+    public Vector3Int position;
+    public Coroutine growthCoroutine;
 }
 
 public class CropsManager : MonoBehaviour
@@ -21,7 +24,7 @@ public class CropsManager : MonoBehaviour
         crops = new Dictionary<Vector2Int, Crops>();
     }
 
-    public bool Check (Vector3Int position)
+    public bool Check(Vector3Int position)
     {
         return crops.ContainsKey((Vector2Int)position);
     }
@@ -36,9 +39,22 @@ public class CropsManager : MonoBehaviour
         CreatePlowedTile(position);
     }
 
-    public void Seed(Vector3Int position, int seed)
+    public void Seed(Vector3Int position, CropData cropData)
     {
-       targetTilemap.SetTile(position, seeded[seed]);
+        if (!crops.ContainsKey((Vector2Int)position))
+            return;
+
+        Crops crop = new Crops
+        {
+            growthStage = 0,
+            cropData = cropData,
+            position = position
+        };
+
+        crops[(Vector2Int)position] = crop;
+
+        targetTilemap.SetTile(position, crop.cropData.growthStages[0]);
+        crop.growthCoroutine = StartCoroutine(GrowCrop(crop));
     }
 
     private void CreatePlowedTile(Vector3Int position)
@@ -47,6 +63,16 @@ public class CropsManager : MonoBehaviour
         crops.Add((Vector2Int)position, crop);
 
         targetTilemap.SetTile(position, plowed);
+    }
+    
+    private IEnumerator GrowCrop(Crops crop)
+    {
+        while (crop.growthStage < crop.cropData.maxGrowthStage)
+        {
+            yield return new WaitForSeconds(crop.cropData.timePerStage);
+            crop.growthStage++;
+            targetTilemap.SetTile(crop.position, crop.cropData.growthStages[crop.growthStage]);
+        }
     }
 
 
