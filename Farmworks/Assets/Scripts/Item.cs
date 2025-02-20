@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,14 +18,20 @@ public class Item : ScriptableObject
 
     [Header("Only UI")]
     public bool stackable = true;
+    public Sprite icon;
 
 
     [Header("Both")]
     public Sprite image;
 
     public CropData cropData;
-    
+
     //public bool oneTimeUse = false;
+
+    public ToolAction onAction;
+    public ToolAction onTilemapAction;
+
+    public ToolAction onItemUsed;
 
 }
 

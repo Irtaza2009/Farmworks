@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,6 +11,31 @@ public class Crops
     public CropData cropData;
     public Vector3Int position;
     public Coroutine growthCoroutine;
+    
+
+
+    public bool Complete
+    {
+        get
+        {
+            if (cropData == null) { return false; }
+            return growthStage == cropData.maxGrowthStage;
+        }
+    }
+
+    internal void Harvested()
+    {
+        growthStage = 0;
+        cropData = null;
+        position = Vector3Int.zero;
+
+        if (growthCoroutine != null)
+        {
+            // Stop growth coroutine to prevent errors
+            GameManager.instance.StopCoroutine(growthCoroutine);
+            growthCoroutine = null;
+        }
+    }
 }
 
 public class CropsManager : MonoBehaviour
@@ -75,5 +102,23 @@ public class CropsManager : MonoBehaviour
         }
     }
 
+    public void PickUp(Vector3Int gridPosition)
+    {
+        Vector2Int position = (Vector2Int)gridPosition;
 
+        if (!crops.ContainsKey(position)) return;
+
+        Crops cropTile = crops[position];
+
+        if (cropTile.Complete)
+        {
+            ItemSpawnManager.instance.SpawnItem(targetTilemap.CellToWorld(gridPosition), cropTile.cropData.yield, 1);
+            
+            // Remove crop from the dictionary and reset tile to plowed
+            crops.Remove(position);
+            targetTilemap.SetTile(gridPosition, null);
+
+            Debug.Log("Harvested");
+        }
+    }
 }

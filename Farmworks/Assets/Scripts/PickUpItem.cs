@@ -7,7 +7,8 @@ public class PickUpItem : MonoBehaviour
     [SerializeField] float ttl = 20f;
     
     InventoryManager inventoryManager;
-    public Item[] itemsToPickup;
+    public Item item;
+    public int count;
 
     private void Start()
     {
@@ -23,25 +24,39 @@ public class PickUpItem : MonoBehaviour
         
     }
 
+    public void Set(Item item, int count)
+    {
+        this.item = item;
+        this.count = count;
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.sprite = item.icon;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            PickupItem(0);
+            PickupItem();
             Destroy(gameObject);
         }
     }
 
 
-    public void PickupItem(int id)
+    public void PickupItem()
     {
-        bool result = inventoryManager.AddItem(itemsToPickup[id]);
-        if (result)
+        for (int i = 0; i < count; i++)
         {
-            Debug.Log("Picked up item: " + itemsToPickup[id].name);
-        } else
-        {
-            Debug.Log("Inventory is full");
+
+            bool result = inventoryManager.AddItem(item);
+            if (result)
+            {
+                Debug.Log("Picked up item: " + item.name);
+            }
+            else
+            {
+                Debug.Log("Inventory is full");
+            }
         }
         
     }

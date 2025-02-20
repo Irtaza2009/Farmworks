@@ -76,6 +76,28 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    public void Remove(Item item, int count = 1)
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null && itemInSlot.item == item)
+            {
+                itemInSlot.count -= count;
+                if (itemInSlot.count <= 0)
+                {
+                    Destroy(itemInSlot.gameObject);
+                }
+                else
+                {
+                    itemInSlot.RefreshCount();
+                }
+                return;
+            }
+        }
+    }
+
     public Item GetSelectedItem(bool use)
     {
         InventorySlot slot = inventorySlots[selectedSlot];
@@ -89,7 +111,8 @@ public class InventoryManager : MonoBehaviour
                 if (itemInSlot.count <= 0)
                 {
                     Destroy(itemInSlot.gameObject);
-                } else
+                }
+                else
                 {
                     itemInSlot.RefreshCount();
                 }

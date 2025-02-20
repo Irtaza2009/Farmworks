@@ -18,3 +18,6 @@ MonoBehaviour:
   range: {x: 5, y: 4}
   stackable: 0
   image: {fileID: 124551717, guid: 80dc69765e9894d958efeac2b94c704b, type: 3}
+  cropData: {fileID: 0}
+  onAction: {fileID: 0}
+  onTilemapAction: {fileID: 11400000, guid: e83bcf1b5b51c4d8d8cc369b25473186, type: 2}

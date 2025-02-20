@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af872b6d51d694f1ab645bd28206c1b0, type: 3}
+  m_Name: Cherry
+  m_EditorClassIdentifier: 
+  cropName: Cherry
+  growthStages:
+  - {fileID: 11400000, guid: a72a7956e1c37459cad36d1b9c786563, type: 2}
+  - {fileID: 11400000, guid: 787095eb48aaf4cefa5283dfa8c2c6eb, type: 2}
+  - {fileID: 11400000, guid: 916f343052d574ebebc74d125ef07573, type: 2}
+  - {fileID: 11400000, guid: 7c5e5ac5e57e84be49ecbcc620189f9f, type: 2}
+  timePerStage: 5
+  yieldAmount: 1
+  yield: {fileID: 0}

@@ -37,6 +37,9 @@ public class ChestPickup : MonoBehaviour
             PickupItem(2);
             PickupItem(3);
             PickupItem(4);
+            PickupItem(5);
+            PickupItem(6);
+            PickupItem(7);
         }
 
         

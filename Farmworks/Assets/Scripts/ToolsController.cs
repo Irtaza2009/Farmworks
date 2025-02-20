@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,11 @@ public class ToolsController : MonoBehaviour
     [SerializeField] MarkerManager markerManager;
     [SerializeField] TileMapReadController tileMapReadController;
     [SerializeField] float maxDistance = 1.5f;
-    [SerializeField] CropsManager cropsManager;
-    [SerializeField] TileData plowableTiles;
+    //[SerializeField] CropsManager cropsManager;
+    //[SerializeField] TileData plowableTiles;
     [SerializeField] InventoryManager inventoryManager;
+
+    [SerializeField] ToolAction onTilePickUp;
 
     Vector3Int selectedTilePosition;
     bool selectabel;
@@ -66,21 +69,16 @@ public class ToolsController : MonoBehaviour
         {
             return false;
         }
-        else if (selectedItem.type == ItemType.Tool && selectedItem.actionType == ActionType.Use && selectedItem.name == "Axe")
+        if (selectedItem.onAction == null)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, sizeOfInteractableArea);
-            foreach (Collider2D collider in colliders)
-            {
-                ToolHit hit = collider.GetComponent<ToolHit>();
-                if (hit != null)
-                {
-                    hit.Hit();
-                    return true;
-                }
-            }
-            
+            return false;
         }
-        return false;
+        bool complete = selectedItem.onAction.OnApply(transform.position);
+        if (complete)
+        {
+            selectedItem.onItemUsed?.OnItemUsed(selectedItem, inventoryManager);
+        }
+        return complete;
     }
 
     private void UseToolGrid()
@@ -89,14 +87,28 @@ public class ToolsController : MonoBehaviour
         { return; }
 
         TileBase tileBase = tileMapReadController.GetTileBase(selectedTilePosition);
-        TileData tileData = tileMapReadController.GetTileData(tileBase);
+
 
         Item selectedItem = inventoryManager.GetSelectedItem(false);
         if (selectedItem == null)
         {
+            PickUpTile();
             return;
         }
+        if (selectedItem.onTilemapAction == null)
+        {
+            PickUpTile();
+            return;
+        }
+        bool complete = selectedItem.onTilemapAction.OnApplyToTilemap(selectedTilePosition, tileMapReadController);
 
+        if (complete)
+        {
+            selectedItem.onItemUsed?.OnItemUsed(selectedItem, inventoryManager);
+        }
+
+
+        /*
         if (selectedItem.type == ItemType.Tool && selectedItem.actionType == ActionType.Use && selectedItem.name == "Pickaxe")
         {
             if (tileData == plowableTiles)
@@ -113,7 +125,17 @@ public class ToolsController : MonoBehaviour
                 cropsManager.Seed(selectedTilePosition, selectedCrop);
             }
 
-        }   
-        
+        } 
+        */
+
+    }
+
+    private void PickUpTile()
+    {
+        if (onTilePickUp == null)
+        {
+            return;
+        }
+       onTilePickUp.OnApplyToTilemap(selectedTilePosition, tileMapReadController);
     }
 }

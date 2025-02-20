@@ -19,3 +19,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7171f7b3eaecd440db8d78901d7b777e, type: 2}
   - {fileID: 11400000, guid: 6068a07bcffef4497b23be2416242b4c, type: 2}
   timePerStage: 10
+  yieldAmount: 1
+  yield: {fileID: 0}

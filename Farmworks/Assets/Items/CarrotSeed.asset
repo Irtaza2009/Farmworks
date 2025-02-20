@@ -19,3 +19,6 @@ MonoBehaviour:
   stackable: 1
   image: {fileID: -1657129040, guid: ab126c593cf3a4e26ace756fcc87138b, type: 3}
   cropData: {fileID: 11400000, guid: 1a31345822ca54a93b92a3643338927a, type: 2}
+  onAction: {fileID: 0}
+  onTilemapAction: {fileID: 11400000, guid: 8e7ccc3a71839454b9b309b0ca081b48, type: 2}
+  onItemUsed: {fileID: 11400000, guid: 8e7ccc3a71839454b9b309b0ca081b48, type: 2}

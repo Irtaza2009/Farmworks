@@ -99,9 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ttl: 10
-  inventoryManager: {fileID: 0}
-  itemsToPickup:
-  - {fileID: 11400000, guid: efad1f95665164747a6791a55d89ae58, type: 2}
+  item: {fileID: 11400000, guid: efad1f95665164747a6791a55d89ae58, type: 2}
+  count: 1
 --- !u!61 &6304098017776366439
 BoxCollider2D:
   m_ObjectHideFlags: 0
