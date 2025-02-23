@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChestPickup : MonoBehaviour
 {
-    public InventoryManager inventoryManager;
+    InventoryManager inventoryManager;
 
     private Animator animator;
     public Item[] itemsToPickup;
@@ -12,6 +12,7 @@ public class ChestPickup : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        inventoryManager = GameManager.instance.inventoryManager;
     }
     public void PickupItem(int id)
     {
