@@ -20,4 +20,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 665bf231bc94047a8b6d6b2f0c771340, type: 2}
   timePerStage: 10
   yieldAmount: 1
-  yield: {fileID: 0}
+  yield: {fileID: 11400000, guid: 91a053bbeeea343e4a2cd43b6efacfa1, type: 2}
