@@ -9,16 +9,27 @@ public class ChestPickup : MonoBehaviour
     private Animator animator;
     public Item[] itemsToPickup;
 
+    public GameObject storagePanel;
+
     [SerializeField] AudioClip onOpenSound;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         inventoryManager = GameManager.instance.inventoryManager;
+
+
+
+        for (int i = 0; i < itemsToPickup.Length; i++)
+        {
+            PickupItem(i);
+        }
     }
+
     public void PickupItem(int id)
     {
         bool result = inventoryManager.AddItem(itemsToPickup[id]);
+
         if (result)
         {
             Debug.Log("Picked up item: " + itemsToPickup[id].name);
@@ -36,17 +47,11 @@ public class ChestPickup : MonoBehaviour
         {
             AudioManager.instance.Play(onOpenSound);
             animator.Play("Chest_Open");
-            PickupItem(0);
-            PickupItem(1);
-            PickupItem(2);
-            PickupItem(3);
-            PickupItem(4);
-            PickupItem(5);
-            PickupItem(6);
-            PickupItem(7);
+
+            OpenStorage();
         }
 
-        
+
 
     }
 
@@ -55,7 +60,18 @@ public class ChestPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             animator.Play("Chest_Close");
+            CloseStorage();
         }
+    }
+    
+    void OpenStorage()
+    {
+        storagePanel.SetActive(true);
+    }
+
+    void CloseStorage()
+    {
+        storagePanel.SetActive(false);
     }
 
     
