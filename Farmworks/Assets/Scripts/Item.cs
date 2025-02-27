@@ -33,6 +33,9 @@ public class Item : ScriptableObject
 
     public ToolAction onItemUsed;
 
+    public bool itemHighlight = false;
+    public GameObject itemPrefab;
+
 }
 
 public enum ItemType {

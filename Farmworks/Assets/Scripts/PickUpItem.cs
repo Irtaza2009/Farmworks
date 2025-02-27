@@ -19,7 +19,7 @@ public class PickUpItem : MonoBehaviour
         ttl -= Time.deltaTime;
         if (ttl <= 0)
         {
-            Destroy(gameObject);
+           // Destroy(gameObject);
         }
         
     }

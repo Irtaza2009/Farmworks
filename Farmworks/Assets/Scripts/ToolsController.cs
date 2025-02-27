@@ -19,6 +19,8 @@ public class ToolsController : MonoBehaviour
 
     [SerializeField] ToolAction onTilePickUp;
 
+    [SerializeField] IconHighlight iconHighlight;
+
     Vector3Int selectedTilePosition;
     bool selectabel;
 
@@ -50,6 +52,15 @@ public class ToolsController : MonoBehaviour
         Vector2 cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         selectabel = Vector2.Distance(characterPosition, cameraPosition) < maxDistance;
         markerManager.Show(selectabel);
+        if (inventoryManager.GetSelectedItem(false).itemHighlight)
+        {
+            iconHighlight.Show(selectabel);
+            iconHighlight.Set(inventoryManager.GetSelectedItem(false).icon);
+        }
+        if (inventoryManager.GetSelectedItem(false).itemHighlight == false)
+        {
+            iconHighlight.Show(false);
+        }
     }
 
     private void SelectTile()
@@ -60,6 +71,7 @@ public class ToolsController : MonoBehaviour
     private void Marker()
     {
         markerManager.markedCellPosition = selectedTilePosition;
+        iconHighlight.cellPosition = selectedTilePosition;
     }
 
     private bool UseToolWorld()

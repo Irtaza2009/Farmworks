@@ -7,6 +7,8 @@ public class PlowTile : ToolAction
 {
     [SerializeField] List<TileBase> canPlow;
 
+    [SerializeField] AudioClip plowSound;
+
     public override bool OnApplyToTilemap(Vector3Int gridPosition, TileMapReadController tileMapReadController)
     {
         TileBase tileToPlow = tileMapReadController.GetTileBase(gridPosition);
@@ -17,6 +19,7 @@ public class PlowTile : ToolAction
         }
         Debug.Log("Plowing tile at " + gridPosition);
         tileMapReadController.cropsManager.Plow(gridPosition);
+        AudioManager.instance.Play(plowSound);
         return true;
     }
 

@@ -9,6 +9,8 @@ public class ChestPickup : MonoBehaviour
     private Animator animator;
     public Item[] itemsToPickup;
 
+    [SerializeField] AudioClip onOpenSound;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -32,6 +34,7 @@ public class ChestPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            AudioManager.instance.Play(onOpenSound);
             animator.Play("Chest_Open");
             PickupItem(0);
             PickupItem(1);

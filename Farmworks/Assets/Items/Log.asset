@@ -17,4 +17,11 @@ MonoBehaviour:
   actionType: 0
   range: {x: 5, y: 4}
   stackable: 1
+  icon: {fileID: 2024667230, guid: cfbad1273d36d4d6bb060aad552286b7, type: 3}
   image: {fileID: 2024667230, guid: cfbad1273d36d4d6bb060aad552286b7, type: 3}
+  cropData: {fileID: 0}
+  onAction: {fileID: 0}
+  onTilemapAction: {fileID: 11400000, guid: eca8e9b463cc5402a85ecadadedef8d9, type: 2}
+  onItemUsed: {fileID: 0}
+  itemHighlight: 1
+  itemPrefab: {fileID: 6304098017776366435, guid: f89332953dcfa4f528e5667b47a95d5a, type: 3}
