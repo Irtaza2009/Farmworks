@@ -22,6 +22,6 @@ MonoBehaviour:
   cropData: {fileID: 0}
   onAction: {fileID: 0}
   onTilemapAction: {fileID: 11400000, guid: eca8e9b463cc5402a85ecadadedef8d9, type: 2}
-  onItemUsed: {fileID: 0}
+  onItemUsed: {fileID: 11400000, guid: eca8e9b463cc5402a85ecadadedef8d9, type: 2}
   itemHighlight: 1
   itemPrefab: {fileID: 6304098017776366435, guid: f89332953dcfa4f528e5667b47a95d5a, type: 3}

@@ -52,6 +52,7 @@ public class ToolsController : MonoBehaviour
         Vector2 cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         selectabel = Vector2.Distance(characterPosition, cameraPosition) < maxDistance;
         markerManager.Show(selectabel);
+        if (inventoryManager.GetSelectedItem(false) == null) { return; }
         if (inventoryManager.GetSelectedItem(false).itemHighlight)
         {
             iconHighlight.Show(selectabel);
