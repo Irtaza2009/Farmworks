@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UpperIsland.unity
     guid: 4607ec032032e44d8abbd608ce2672d9
+  - enabled: 1
+    path: Assets/Scenes/Hens.unity
+    guid: bd8b47b1ef658473ba43451d36e52712
+  - enabled: 1
+    path: Assets/Scenes/Cows.unity
+    guid: a59daa11fd37745279188542901da675
   m_configObjects: {}

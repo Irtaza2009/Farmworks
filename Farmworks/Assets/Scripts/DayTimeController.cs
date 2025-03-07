@@ -17,7 +17,7 @@ public class DayTimeController : MonoBehaviour
 
     private int days;
 
-    float Hours
+    public float Hours
     {
         get
         {

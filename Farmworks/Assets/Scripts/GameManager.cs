@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     public InventoryManager inventoryManager;
+    public DayTimeController dayTimeController;
 
     public PlaceableObjectsReferenceManager placeableObjects;
 }
