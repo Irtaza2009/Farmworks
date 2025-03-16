@@ -39,6 +39,7 @@ public class ToolsController : MonoBehaviour
         {
             if (UseToolWorld() == true)
             {
+                StartCoroutine(FindObjectOfType<PlayerController>().CutAnimationCoroutine());
                 return;
             }
             UseToolGrid();

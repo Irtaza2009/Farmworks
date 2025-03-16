@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: fd7001466840e443aa19420ffb55b575
+  - enabled: 1
+    path: Assets/Scenes/Essential.unity
+    guid: b674da45a52e44cd489498ace5008e73
+  - enabled: 1
     path: Assets/Scenes/LowerIsland.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1

@@ -8,6 +8,7 @@ public class CowController : MonoBehaviour
     public float maxSleepTime = 15f;
     public float actionIntervalMin = 8f;
     public float actionIntervalMax = 12f;
+    public GameObject milkBottlePrefab; // Assign in Inspector
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -33,10 +34,7 @@ public class CowController : MonoBehaviour
             animator.Play("Cow_Moving");
 
             // Flip sprite if moving left
-            if (moveDirection.x < 0)
-                transform.localScale = new Vector3(-1, 1, 1);
-            else
-                transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(moveDirection.x < 0 ? -1 : 1, 1, 1);
         }
         else
         {
@@ -50,22 +48,10 @@ public class CowController : MonoBehaviour
         {
             float randomAction = Random.value;
 
-            if (randomAction < 0.3f) // 30% chance to sleep
-            {
-                yield return StartCoroutine(SleepRoutine());
-            }
-            else if (randomAction < 0.5f) // 20% chance to drink
-            {
-                yield return StartCoroutine(DrinkRoutine());
-            }
-            else if (randomAction < 0.7f) // 20% chance to eat
-            {
-                yield return StartCoroutine(EatRoutine());
-            }
-            else // 30% chance to randomly move
-            {
-                yield return StartCoroutine(MoveRoutine());
-            }
+            if (randomAction < 0.3f) yield return StartCoroutine(SleepRoutine());
+            else if (randomAction < 0.5f) yield return StartCoroutine(DrinkRoutine());
+            else if (randomAction < 0.7f) yield return StartCoroutine(EatRoutine());
+            else yield return StartCoroutine(MoveRoutine());
 
             yield return new WaitForSeconds(Random.Range(actionIntervalMin, actionIntervalMax));
         }
@@ -76,12 +62,8 @@ public class CowController : MonoBehaviour
         isSleeping = true;
         isSitting = true;
         rb.velocity = Vector2.zero;
-
         animator.Play("Cow_Sit_Sleeping");
-        Debug.Log("Cow is sleeping...");
-
         yield return new WaitForSeconds(Random.Range(minSleepTime, maxSleepTime));
-
         isSleeping = false;
         PlayIdleSitting();
     }
@@ -89,14 +71,9 @@ public class CowController : MonoBehaviour
     IEnumerator DrinkRoutine()
     {
         yield return StandUpRoutine();
-
         isDrinking = true;
-        rb.velocity = Vector2.zero;
         animator.Play("Cow_Drinking");
-        Debug.Log("Cow is drinking...");
-
         yield return new WaitForSeconds(Random.Range(4f, 6f));
-
         isDrinking = false;
         SitDown();
     }
@@ -104,14 +81,9 @@ public class CowController : MonoBehaviour
     IEnumerator EatRoutine()
     {
         yield return StandUpRoutine();
-
         isEating = true;
-        rb.velocity = Vector2.zero;
         animator.Play("Cow_Eating");
-        Debug.Log("Cow is eating...");
-
         yield return new WaitForSeconds(Random.Range(3f, 6f));
-
         isEating = false;
         SitDown();
     }
@@ -119,10 +91,9 @@ public class CowController : MonoBehaviour
     IEnumerator MoveRoutine()
     {
         yield return StandUpRoutine();
-
         isStanding = true;
         ChangeDirection();
-        yield return new WaitForSeconds(Random.Range(2f, 5f)); // Moves for a short time
+        yield return new WaitForSeconds(Random.Range(2f, 5f));
         SitDown();
     }
 
@@ -132,8 +103,16 @@ public class CowController : MonoBehaviour
         {
             isSitting = false;
             animator.Play("Cow_StandUp");
-            Debug.Log("Cow is standing up...");
             yield return new WaitForSeconds(1f); // Allow animation to play
+            InstantiateMilkBottle(); // Spawn milk bottle when standing up
+        }
+    }
+
+    void InstantiateMilkBottle()
+    {
+        if (milkBottlePrefab != null)
+        {
+            Instantiate(milkBottlePrefab, transform.position, Quaternion.identity);
         }
     }
 
@@ -147,40 +126,24 @@ public class CowController : MonoBehaviour
         isSitting = true;
         rb.velocity = Vector2.zero;
         animator.Play("Cow_SitDown");
-        Debug.Log("Cow is sitting...");
-
         Invoke(nameof(PlayIdleSitting), 1f);
     }
 
     void PlayIdleSitting()
     {
-        if (Random.value < 0.5f)
-        {
-            animator.Play("Cow_Sit_Blinking");
-        }
-        else
-        {
-            animator.Play("Cow_Sit_Tailwag");
-        }
+        animator.Play(Random.value < 0.5f ? "Cow_Sit_Blinking" : "Cow_Sit_Tailwag");
     }
 
     void PlayIdleStanding()
     {
-        if (Random.value < 0.5f)
-        {
-            animator.Play("Cow_Idle_Blinking");
-        }
-        else
-        {
-            animator.Play("Cow_Idle_TailWag");
-        }
+        animator.Play(Random.value < 0.5f ? "Cow_Idle_Blinking" : "Cow_Idle_TailWag");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Fence"))
         {
-            moveDirection = -moveDirection; // Reverse direction if hitting a fence
+            moveDirection = -moveDirection;
         }
     }
 }

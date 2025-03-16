@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (character.isPerformingAction)
+        {
+            return; // Stop all input processing while plowing
+        }
+
         if (!character.isExhausted) // Only allow movement if not exhausted
         {
             float moveX = Input.GetAxisRaw("Horizontal");
@@ -72,10 +77,20 @@ public class PlayerController : MonoBehaviour
         {
             movement = Vector2.zero; // Stop movement if exhausted
             animator.Play($"Idle_{currentDirection}");
+            staminaRegenTimer -= Time.deltaTime;
+            if (staminaRegenTimer <= 0)
+            {
+                character.Rest(staminaRegenRate); // Regenerate stamina
+                if (character.stamina.currVal > 0)
+                {
+                    character.isExhausted = false; // Allow movement again when stamina is regained
+                }
+            }
         }
 
         Check();
     }
+
 
     private void Check()
     {
@@ -120,11 +135,59 @@ public class PlayerController : MonoBehaviour
             {
                 currentDirection = "Left";
             }
-            
+
             animator.Play($"Move_{currentDirection}");
-        } else
+        }
+        else
         {
             animator.Play($"Idle_{currentDirection}");
         }
     }
+
+    public IEnumerator PlowAnimationCoroutine()
+    {
+        movement = Vector2.zero; // Stop movement
+        character.isPerformingAction = true; // Prevent movement updates
+
+        string plowAnimation = $"Plow_{currentDirection}";
+        animator.Play(plowAnimation);
+
+        // Get the animation clip length and wait
+        float animationLength = GetAnimationLength(plowAnimation);
+        yield return new WaitForSeconds(animationLength);
+
+        // Resume movement animations
+        character.isPerformingAction = false;
+        animator.Play($"Idle_{currentDirection}");
+    }
+
+    public IEnumerator CutAnimationCoroutine()
+    {
+        movement = Vector2.zero; // Stop movement
+        character.isPerformingAction = true; // Prevent movement updates
+
+        string cutAnimation = $"Cut_{currentDirection}";
+        animator.Play(cutAnimation);
+
+        float animationLength = GetAnimationLength(cutAnimation);
+        yield return new WaitForSeconds(animationLength);
+
+        // Resume movement animations
+        character.isPerformingAction = false;
+        animator.Play($"Idle_{currentDirection}");
+    }
+
+
+    private float GetAnimationLength(string animationName)
+    {
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == animationName)
+            {
+                return clip.length;
+            }
+        }
+        return 0.5f; // Default fallback if animation not found
+    }
+
 }

@@ -10,7 +10,6 @@ public enum ResourceNodeType
 }
 
 
-
 [CreateAssetMenu(menuName = "Data/ToolAction/GatherResourceNode")]
 public class GatherResourceNode : ToolAction
 {

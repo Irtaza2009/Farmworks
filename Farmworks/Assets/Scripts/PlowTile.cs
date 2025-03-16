@@ -18,6 +18,19 @@ public class PlowTile : ToolAction
             return false;
         }
         Debug.Log("Plowing tile at " + gridPosition);
+
+        // Get the player object
+        GameObject player = GameObject.FindGameObjectWithTag("Player"); 
+        if (player != null)
+        {
+            PlayerController playerController = player.GetComponent<PlayerController>();
+
+            if (playerController != null)
+            {
+                playerController.StartCoroutine(playerController.PlowAnimationCoroutine());
+            }
+        }
+
         tileMapReadController.cropsManager.Plow(gridPosition);
         AudioManager.instance.Play(plowSound);
         return true;

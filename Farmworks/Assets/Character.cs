@@ -41,6 +41,7 @@ public class Character : MonoBehaviour
     public bool isDead;
 
     public bool isExhausted;
+    internal bool isPerformingAction = false;
 
     public void TakeDamage(int amount)
     {
